@@ -1,3 +1,4 @@
+//Author Eduardo Ajuchan
 package I_PARCIAL;
 import java.util.Scanner;
 public class Ejercicio_4 {
