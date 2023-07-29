@@ -39,7 +39,13 @@ public class Calculadora {
                     num1 = teclado.nextInt();
                     System.out.println("Ingrese el segundo número");
                     num2 = teclado.nextInt();
-                    System.out.println("El resultado de la división es: " + (num1 / num2));
+                    if (num1 >= 0 && num2 > 0) {
+                        System.out.println("El resultado de la división es: " + (num1 / num2));
+                    } else if (num2 == 0) {
+                        System.out.println("Error al dividir por 0");
+                    } else {
+                        System.out.println("Error: Ambos números deben ser no negativos");
+                    }
                     break;
                 case 5:
                     System.out.println("Gracias por utilizar la calculadora");
