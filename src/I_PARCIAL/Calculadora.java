@@ -44,7 +44,7 @@ public class Calculadora {
                     } else if (num2 == 0) {
                         System.out.println("Error al dividir por 0");
                     } else {
-                        System.out.println("Error: Ambos números deben ser no negativos");
+                        System.out.println("Error: Los numeros no deben ser negativos");
                     }
                     break;
                 case 5:
