@@ -1,5 +1,5 @@
 package I_PARCIAL;
-public class EjercicioFor {
+public class ForReloj {
         public static void main(String[] args) {
             for (int hora = 0; hora < 24; hora++) {
                 for (int minuto = 0; minuto < 60; minuto++) {
