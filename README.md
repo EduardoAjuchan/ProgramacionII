@@ -7,7 +7,7 @@ Este repositorio contiene una colección de ejercicios y tareas realizadas en el
 
 ## Instrucciones de Instalación
 
-Para trabajar con los ejercicios de este repositorio, necesitarás tener instalado IntelliJ Community, un poderoso IDE para Java. Sigue los siguientes pasos para obtenerlo:
+Para trabajar con los ejercicios de este repositorio, necesitarás tener instalado un IDE o IntelliJ Community, un poderoso IDE para Java. Sigue los siguientes pasos para obtenerlo:
 
 1. Descarga IntelliJ Community desde el siguiente enlace: [IntelliJ Community](https://www.jetbrains.com/idea/download/)
 
