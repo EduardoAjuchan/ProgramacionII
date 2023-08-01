@@ -1,6 +1,9 @@
 # Programación II - Ejercicios en Java
 
-Este repositorio contiene una colección de ejercicios y tareas realizadas en el curso de Programación II. Aquí encontrarás ejercicios relacionados con ciclos `for`, `while`, `do while`, Poo, ejercicios varios, así como un ejercicio especial de un contador que funciona como un timer, contando segundos, minutos y horas.
+![Autor](https://img.shields.io/badge/Author-Eduardo%20Ajuchan-blue.svg)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
+Este repositorio contiene una colección de ejercicios y tareas realizadas en el curso de Programación II, en Java. Aquí encontrarás ejercicios relacionados con la Programación Estructurada (ciclos `for`, `while`, `do while`) y la Programación Orientada a Objetos (POO), ejercicios por cada tema, además de un interesante ejercicio de un contador que funciona como un timer, contando segundos, minutos y horas mediante ciclos.
 
 ## Instrucciones de Instalación
 
@@ -12,7 +15,7 @@ Para trabajar con los ejercicios de este repositorio, necesitarás tener instala
 
 ## Contribución
 
-En la carpeta `src` encontrarás los paquetes y clases correspondientes a los diferentes ejercicios y tareas realizadas en el curso de Programación II. Si deseas contribuir a este repositorio, puedes seguir estos pasos:
+En la carpeta `src` se encuentran los paquetes y clases de los diferentes ejercicios y tareas realizadas en el curso de Programación II. Si deseas contribuir a este repositorio, puedes seguir estos pasos:
 
 1. Haz un fork de este repositorio a tu cuenta de GitHub.
 
@@ -24,11 +27,11 @@ En la carpeta `src` encontrarás los paquetes y clases correspondientes a los di
 
 ### Ejercicio de Timer
 
-El ejercicio de timer consiste en un contador que cuenta segundos, minutos y horas mediante ciclos. Este es un ejemplo interesante para practicar el uso de ciclos en Java.
+El ejercicio de timer consiste en un contador que cuenta segundos, minutos y horas mediante ciclos. Es un ejemplo interesante para practicar tanto la Programación Estructurada como la Programación Orientada a Objetos en Java.
 
 ## Licencia
 
-Este proyecto es de uso libre y tiene el propósito de almacenar los proyectos del curso de Programación II.
+Este proyecto es de uso libre y está bajo la licencia MIT, ya que su propósito es almacenar los proyectos del curso de Programación II.
 
 ## Contacto
 
