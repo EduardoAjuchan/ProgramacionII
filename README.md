@@ -1,6 +1,6 @@
 # Programación II - Ejercicios en Java
 
-Este repositorio contiene una colección de ejercicios y tareas realizadas en el curso de Programación II. Aquí encontrarás ejercicios relacionados con ciclos `for`, `while`, `do while`, así como un ejercicio especial de un contador que funciona como un timer, contando segundos, minutos y horas.
+Este repositorio contiene una colección de ejercicios y tareas realizadas en el curso de Programación II. Aquí encontrarás ejercicios relacionados con ciclos `for`, `while`, `do while`, Poo, ejercicios varios, así como un ejercicio especial de un contador que funciona como un timer, contando segundos, minutos y horas.
 
 ## Instrucciones de Instalación
 
