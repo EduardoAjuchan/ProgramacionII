@@ -30,7 +30,7 @@ public class CalculadoraMetodos {
         System.out.println("El resultado de la multiplicacion es: " + resultado);
     }
     public void Dividir(){
-        float num1, num2, resultado;
+        float num1, num2;
         System.out.println("Ingrese el primer numero: ");
         num1 = Entrada.nextFloat();
         System.out.println("Ingrese el segundo numero: ");
@@ -56,28 +56,14 @@ public class CalculadoraMetodos {
             System.out.println("5. Salir");
             System.out.println("Ingrese la opcion que desea realizar: ");
             opcion = Entrada.nextInt();
-            switch (opcion){
-                case 1:
-                    Calculadora.Sumar();
-                    break;
-                case 2:
-                    Calculadora.Restar();
-                    break;
-                case 3:
-                    Calculadora.Multiplicar();
-                    break;
-                case 4:
-                    Calculadora.Dividir();
-                    break;
-                case 5:
-                    System.out.println("Gracias por usar la calculadora");
-                    break;
-                default:
-                    System.out.println("Opcion invalida");
-                    break;
+            switch (opcion) {
+                case 1 -> Calculadora.Sumar();
+                case 2 -> Calculadora.Restar();
+                case 3 -> Calculadora.Multiplicar();
+                case 4 -> Calculadora.Dividir();
+                case 5 -> System.out.println("Gracias por usar la calculadora");
+                default -> System.out.println("Opcion invalida");
             }
         }while (opcion != 5);
     }
-
-
 }
