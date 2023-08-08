@@ -55,10 +55,10 @@ class Farmacia {
         Producto producto = buscarProducto(codigo);
         if (producto != null) {
             producto.cantidadExistente += cantidad;
-            System.out.println("Existencia actualizada:");
+            System.out.println("Existencias actualizada:");
             mostrarProducto(producto);
         } else {
-            System.out.println("Lo siento, producto no existe");
+            System.out.println("Lo siento, el producto que buscas no existe");
         }
     }
     public void extraerProducto(String codigo, int cantidad) {
@@ -66,13 +66,13 @@ class Farmacia {
         if (producto != null) {
             if (producto.cantidadExistente >= cantidad) {
                 producto.cantidadExistente -= cantidad;
-                System.out.println("Existencia actualizada:");
+                System.out.println("Existencias actualizada:");
                 mostrarProducto(producto);
             } else {
-                System.out.println("Existencia insuficiente !!!");
+                System.out.println("No hay suficientes productos !!!");
             }
         } else {
-            System.out.println("Lo siento, producto no existe !!!");
+            System.out.println("Lo siento, el producto que buscas no existe !!!");
         }
     }
     private void mostrarProducto(Producto producto) {
@@ -137,7 +137,7 @@ public class Main {
                     break;
 
                 case 5:
-                    System.out.println("¡Hasta luego!");
+                    System.out.println("Gracias por preferir Farmcias El Difunto");
                     break;
 
                 default:
