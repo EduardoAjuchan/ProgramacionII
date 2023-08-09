@@ -25,10 +25,20 @@ class Producto {
 //Lista para almacenar los objetos de tipo Producto
 class Farmacia {
     List<Producto> inventario = new ArrayList<>();
-//metodo para agregar un producto al inventario de la farmacia pasando un objeto de tipo Producto
+
+    //metodo para agregar un producto al inventario de la farmacia pasando un objeto de tipo Producto
     public void registrarProducto(Producto producto) {
-        inventario.add(producto);
+        // Verificar si ya existe un producto con el mismo código
+        Producto productoExistente = buscarProducto(producto.codigoProducto);
+        if (productoExistente != null) {
+            System.out.println("Ya existe un producto con el mismo código.");
+            return;
+        } else {
+            inventario.add(producto);
+            System.out.println("Producto registrado exitosamente.");
+        }
     }
+
     //metodo para mostrar los productos del inventario verificando primero si hay productos ingresados
     public void mostrarProductos() {
         if (inventario.isEmpty()) {
