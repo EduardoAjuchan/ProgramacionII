@@ -4,11 +4,13 @@ Proyecto: LABORATORIO 1
 PROGRAMACION II*/
 import java.io.*;
 import java.util.*;
+//Definiendo tipo de datos para el producto
 class Producto {
     String codigoProducto;
     String nombreProducto;
     int cantidadExistente;
     double precioUnitario;
+    //Constructor de la clase Producto con sus atributos y parametros de entrada (Creando un objeto)
     public Producto(String codigoProducto, String nombreProducto, int cantidadExistente, double precioUnitario) {
         this.codigoProducto = codigoProducto;
         this.nombreProducto = nombreProducto;
@@ -55,7 +57,7 @@ class Farmacia {
         Producto producto = buscarProducto(codigo);
         if (producto != null) {
             producto.cantidadExistente += cantidad;
-            System.out.println("Existencias actualizada:");
+            System.out.println("Existencias actualizadas:");
             mostrarProducto(producto);
         } else {
             System.out.println("Lo siento, el producto que buscas no existe");
@@ -91,7 +93,9 @@ public class Main {
         int opcion;
 
         do {
-            System.out.println("Menú Principal");
+            System.out.println("*********************************************");
+            System.out.println("FARMACIAS EL DIFUNTO");
+            System.out.println("*********************************************");
             System.out.println("1. Registrar producto en el inventario");
             System.out.println("2. Mostrar productos del inventario");
             System.out.println("3. Ingresar producto al inventario");
@@ -141,7 +145,7 @@ public class Main {
                     break;
 
                 default:
-                    System.out.println("Opción inválida");
+                    System.out.println("Seleccionaste una opción inválida");
                     break;
             }
         } while (opcion != 5);
