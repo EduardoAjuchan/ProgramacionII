@@ -17,21 +17,25 @@ class Producto {
         this.cantidadExistente = cantidadExistente;
         this.precioUnitario = precioUnitario;
     }
+    //metodo para calcular el valor si se vendieran todas las unidades de un producto a su precio unitario
     public double calcularTotal() {
         return cantidadExistente * precioUnitario;
     }
 }
+//Lista para almacenar los objetos de tipo Producto
 class Farmacia {
     List<Producto> inventario = new ArrayList<>();
-
+//metodo para agregar un producto al inventario de la farmacia pasando un objeto de tipo Producto
     public void registrarProducto(Producto producto) {
         inventario.add(producto);
     }
+    //metodo para mostrar los productos del inventario verificando primero si hay productos ingresados
     public void mostrarProductos() {
         if (inventario.isEmpty()) {
             System.out.println("Lo siento!!! No hay productos");
             return;
         }
+        //muestra la informacion de los productos existentes y calcula el gran total
         double granTotal = 0;
         for (Producto producto : inventario) {
             double total = producto.calcularTotal();
@@ -45,6 +49,7 @@ class Farmacia {
         }
         System.out.println("Gran Total: " + granTotal);
     }
+    //metodo para buscar un producto por su codigo y retornar el objeto de tipo Producto
     public Producto buscarProducto(String codigo) {
         for (Producto producto : inventario) {
             if (producto.codigoProducto.equals(codigo)) {
@@ -63,6 +68,7 @@ class Farmacia {
             System.out.println("Lo siento, el producto que buscas no existe");
         }
     }
+    //busca un producto por su codigo y verifica si hay existencias suficientes para extraer
     public void extraerProducto(String codigo, int cantidad) {
         Producto producto = buscarProducto(codigo);
         if (producto != null) {
@@ -77,6 +83,7 @@ class Farmacia {
             System.out.println("Lo siento, el producto que buscas no existe !!!");
         }
     }
+//muestra la informacion del objeto de tipo Producto
     private void mostrarProducto(Producto producto) {
         System.out.println("Codigo: " + producto.codigoProducto);
         System.out.println("Nombre: " + producto.nombreProducto);
@@ -85,6 +92,7 @@ class Farmacia {
         System.out.println("Total: " + producto.calcularTotal());
     }
 }
+//clase principal que contiene el metodo main
 public class Main {
     public static void main(String[] args) {
         Farmacia farmacia = new Farmacia();
@@ -152,6 +160,7 @@ public class Main {
 
         scanner.close();
     }
+    //funcion para cargar los datos de los productos desde el archivo de texto y los registra en el objeto de tipo Farmacia
     private static void cargarDatosDesdeArchivo(Farmacia farmacia) {
         String filePath = "c:/ficheros/farmacia.txt";
         try (Scanner fileScanner = new Scanner(new File(filePath))) {
@@ -169,7 +178,8 @@ public class Main {
         } catch (FileNotFoundException e) {
             System.out.println("El archivo no existe. Se creará uno nuevo al guardar datos.");
         }
-    }
+    } //Try Catch para manejar la excepcion en caso de que el archivo no exista
+
     private static void guardarDatosEnArchivo(Farmacia farmacia) {
         String filePath = "c:/ficheros/farmacia.txt";
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
