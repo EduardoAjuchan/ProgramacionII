@@ -180,6 +180,8 @@ public class Main {
         }
     } //Try Catch para manejar la excepcion en caso de que el archivo no exista
 
+/*funcion para guardar los datos de los productos en el archivo de texto
+Se utiliza un bucle for para recorrer los productos y escribir los datos de cada producto en una linea individual*/
     private static void guardarDatosEnArchivo(Farmacia farmacia) {
         String filePath = "c:/ficheros/farmacia.txt";
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
