@@ -38,7 +38,6 @@ class Farmacia {
 
         }
     }
-
     //metodo para mostrar los productos del inventario verificando primero si hay productos ingresados
     public void mostrarProductos() {
         if (inventario.isEmpty()) {
@@ -114,7 +113,6 @@ class Farmacia {
         }
     }
 
-
     //muestra la informacion del objeto de tipo Producto
     private void mostrarProducto(Producto producto) {
         System.out.println("Codigo: " + producto.codigoProducto);
@@ -124,7 +122,6 @@ class Farmacia {
         System.out.println("Total: " + producto.calcularTotal());
     }
 }
-
 //clase principal que contiene el metodo main
 public class Main {
     public static void main(String[] args) {
@@ -137,10 +134,10 @@ public class Main {
             System.out.println("*********************************************");
             System.out.println("FARMACIAS EL DIFUNTO");
             System.out.println("*********************************************");
-            System.out.println("1. Registrar producto en el inventario");
-            System.out.println("2. Mostrar productos del inventario");
-            System.out.println("3. Ingresar producto al inventario");
-            System.out.println("4. Extraer producto del inventario");
+            System.out.println("1. Registrar medicamento en el inventario");
+            System.out.println("2. Mostrar mediamentos del inventario");
+            System.out.println("3. Ingresar existencias al inventario");
+            System.out.println("4. Hacer venta de un producto");
             System.out.println("5. Eliminar un producto del inventario");
             System.out.println("6. Salir");
             System.out.print("Seleccione una opción: ");
