@@ -79,20 +79,32 @@ class Farmacia {
         }
     }
     //busca un producto por su codigo y verifica si hay existencias suficientes para extraer
-    public void extraerProducto(String codigo, int cantidad) {
-        Producto producto = buscarProducto(codigo);
-        if (producto != null) {
-            if (producto.cantidadExistente >= cantidad) {
-                producto.cantidadExistente -= cantidad;
-                System.out.println("Existencias actualizada:");
-                mostrarProducto(producto);
+    public void extraerProductos(Scanner scanner) {
+        String confirmacion;
+        do {
+            System.out.print("Ingrese el código del producto a extraer: ");
+            String codigo = scanner.next();
+            Producto producto = buscarProducto(codigo);
+
+            if (producto != null) {
+                System.out.print("Ingrese la cantidad del producto a extraer: ");
+                int cantidad = scanner.nextInt();
+                if (producto.cantidadExistente >= cantidad) {
+                    System.out.println("Extrayendo " + cantidad + " unidades del producto " + producto.nombreProducto);
+                    producto.cantidadExistente -= cantidad;
+                    mostrarProducto(producto);
+                } else {
+                    System.out.println("No hay suficientes productos !!!");
+                }
             } else {
-                System.out.println("No hay suficientes productos !!!");
+                System.out.println("Lo siento, el producto que buscas no existe !!!");
             }
-        } else {
-            System.out.println("Lo siento, el producto que buscas no existe !!!");
-        }
+    //da opcion para elegir si se desea extraer otro producto
+            System.out.print("¿Desea extraer otro producto? (S/N): ");
+            confirmacion = scanner.next();
+        } while (confirmacion.equalsIgnoreCase("S"));
     }
+
     //muestra la informacion del objeto de tipo Producto
     private void mostrarProducto(Producto producto) {
         System.out.println("Codigo: " + producto.codigoProducto);
@@ -150,11 +162,7 @@ public class Main {
                     break;
 
                 case 4:
-                    System.out.print("Ingrese el código del producto a extraer: ");
-                    codigo = scanner.next();
-                    System.out.print("Ingrese la cantidad del producto a extraer: ");
-                    cantidad = scanner.nextInt();
-                    farmacia.extraerProducto(codigo, cantidad);
+                    farmacia.extraerProductos(scanner);
                     guardarDatosEnArchivo(farmacia); // Guardar datos actualizados en el archivo
                     break;
 
