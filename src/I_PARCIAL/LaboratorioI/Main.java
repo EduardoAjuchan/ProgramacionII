@@ -35,7 +35,7 @@ class Farmacia {
             return;
         } else {
             inventario.add(producto);
-            System.out.println("Producto registrado exitosamente.");
+
         }
     }
 
@@ -93,7 +93,7 @@ class Farmacia {
             System.out.println("Lo siento, el producto que buscas no existe !!!");
         }
     }
-//muestra la informacion del objeto de tipo Producto
+    //muestra la informacion del objeto de tipo Producto
     private void mostrarProducto(Producto producto) {
         System.out.println("Codigo: " + producto.codigoProducto);
         System.out.println("Nombre: " + producto.nombreProducto);
@@ -133,7 +133,7 @@ public class Main {
                     double precio = scanner.nextDouble();
                     farmacia.registrarProducto(new Producto(codigo, nombre, cantidad, precio));
                     guardarDatosEnArchivo(farmacia); // Guardar datos actualizados en el archivo
-                    System.out.println("Producto guardado exitosamente");
+                    System.out.println("Producto registrado exitosamente.");
                     break;
 
                 case 2:
@@ -190,8 +190,8 @@ public class Main {
         }
     } //Try Catch para manejar la excepcion en caso de que el archivo no exista
 
-/*funcion para guardar los datos de los productos en el archivo de texto
-Se utiliza un bucle for para recorrer los productos y escribir los datos de cada producto en una linea individual*/
+    /*funcion para guardar los datos de los productos en el archivo de texto
+    Se utiliza un bucle for para recorrer los productos y escribir los datos de cada producto en una linea individual*/
     private static void guardarDatosEnArchivo(Farmacia farmacia) {
         String filePath = "c:/ficheros/farmacia.txt";
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
