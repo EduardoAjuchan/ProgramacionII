@@ -104,6 +104,16 @@ class Farmacia {
             confirmacion = scanner.next();
         } while (confirmacion.equalsIgnoreCase("S"));
     }
+    public void eliminarProducto(String codigo) {
+        Producto producto = buscarProducto(codigo);
+        if (producto != null) {
+            inventario.remove(producto);
+            System.out.println("Producto eliminado exitosamente.");
+        } else {
+            System.out.println("El producto que intentas eliminar no existe.");
+        }
+    }
+
 
     //muestra la informacion del objeto de tipo Producto
     private void mostrarProducto(Producto producto) {
@@ -114,6 +124,7 @@ class Farmacia {
         System.out.println("Total: " + producto.calcularTotal());
     }
 }
+
 //clase principal que contiene el metodo main
 public class Main {
     public static void main(String[] args) {
@@ -130,7 +141,8 @@ public class Main {
             System.out.println("2. Mostrar productos del inventario");
             System.out.println("3. Ingresar producto al inventario");
             System.out.println("4. Extraer producto del inventario");
-            System.out.println("5. Salir");
+            System.out.println("5. Eliminar un producto del inventario");
+            System.out.println("6. Salir");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
             switch (opcion) {
@@ -167,14 +179,19 @@ public class Main {
                     break;
 
                 case 5:
+                    System.out.print("Ingrese el código del producto a eliminar: ");
+                    codigo = scanner.next();
+                    farmacia.eliminarProducto(codigo);
+                    guardarDatosEnArchivo(farmacia); // Guardar datos actualizados en el archivo
+                    break;
+                case 6:
                     System.out.println("Gracias por preferir Farmcias El Difunto");
                     break;
-
                 default:
                     System.out.println("Seleccionaste una opción inválida");
                     break;
             }
-        } while (opcion != 5);
+        } while (opcion != 6);
 
         scanner.close();
     }
