@@ -3,49 +3,66 @@ package I_PARCIAL.LaboratorioI;
 Proyecto: LABORATORIO 1
 PROGRAMACION II*/
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
-//Definiendo tipo de datos para el producto
+
+
 class Producto {
     String codigoProducto;
     String nombreProducto;
     int cantidadExistente;
     double precioUnitario;
-    //Constructor de la clase Producto con sus atributos y parametros de entrada (Creando un objeto)
+    Date fechaRegistro;
+    Date fechaExtraccion;
+
     public Producto(String codigoProducto, String nombreProducto, int cantidadExistente, double precioUnitario) {
         this.codigoProducto = codigoProducto;
         this.nombreProducto = nombreProducto;
         this.cantidadExistente = cantidadExistente;
         this.precioUnitario = precioUnitario;
+        this.fechaRegistro = new Date();
     }
-    //metodo para calcular el valor si se vendieran todas las unidades de un producto a su precio unitario
+
     public double calcularTotal() {
         return cantidadExistente * precioUnitario;
     }
 }
-//Lista para almacenar los objetos de tipo Producto
+
 class Farmacia {
     List<Producto> inventario = new ArrayList<>();
 
-    //metodo para agregar un producto al inventario de la farmacia pasando un objeto de tipo Producto
     public void registrarProducto(Producto producto) {
-        // Verificar si ya existe un producto con el mismo código
         Producto productoExistente = buscarProducto(producto.codigoProducto);
         if (productoExistente != null) {
             System.out.println("Ya existe un producto con el mismo código.");
             return;
         } else {
             inventario.add(producto);
-
+            guardarDatosEnArchivo(this); // Agrega esta línea para guardar los datos al agregar un nuevo producto
         }
     }
-    //metodo para mostrar los productos del inventario verificando primero si hay productos ingresados
+
+
+    private void guardarDatosEnArchivo(Farmacia farmacia) {
+    }
+
+    private Producto buscarProducto(String codigoProducto) {
+        for (Producto producto : inventario) {
+            if (producto.codigoProducto.equals(codigoProducto)) {
+                return producto;
+            }
+        }
+        return null;
+    }
+
     public void mostrarProductos() {
         if (inventario.isEmpty()) {
             System.out.println("Lo siento!!! No hay productos");
             return;
         }
-        //muestra la informacion de los productos existentes y calcula el gran total
         double granTotal = 0;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); // Formato de fecha
         for (Producto producto : inventario) {
             double total = producto.calcularTotal();
             granTotal += total;
@@ -53,31 +70,22 @@ class Farmacia {
             System.out.println("Nombre: " + producto.nombreProducto);
             System.out.println("Cantidad: " + producto.cantidadExistente);
             System.out.println("Precio Unitario: " + producto.precioUnitario);
+
+            if (producto.fechaRegistro != null) {
+                System.out.println("Fecha de Registro: " + dateFormat.format(producto.fechaRegistro)); // Mostrar fecha de registro
+            }
+
+            if (producto.fechaExtraccion != null) {
+                System.out.println("Fecha de Extracción: " + dateFormat.format(producto.fechaExtraccion)); // Mostrar fecha de extracción si existe
+            }
+
             System.out.println("Total: " + total);
             System.out.println();
         }
         System.out.println("Gran Total: " + granTotal);
     }
-    //metodo para buscar un producto por su codigo y retornar el objeto de tipo Producto
-    public Producto buscarProducto(String codigo) {
-        for (Producto producto : inventario) {
-            if (producto.codigoProducto.equals(codigo)) {
-                return producto;
-            }
-        }
-        return null;
-    }
-    public void ingresarProducto(String codigo, int cantidad) {
-        Producto producto = buscarProducto(codigo);
-        if (producto != null) {
-            producto.cantidadExistente += cantidad;
-            System.out.println("Existencias actualizadas:");
-            mostrarProducto(producto);
-        } else {
-            System.out.println("Lo siento, el producto que buscas no existe");
-        }
-    }
-    //busca un producto por su codigo y verifica si hay existencias suficientes para extraer
+
+
     public void extraerProductos(Scanner scanner) {
         String confirmacion;
         do {
@@ -91,23 +99,27 @@ class Farmacia {
                 if (producto.cantidadExistente >= cantidad) {
                     System.out.println("Extrayendo " + cantidad + " unidades del producto " + producto.nombreProducto);
                     producto.cantidadExistente -= cantidad;
+                    producto.fechaExtraccion = new Date();
                     mostrarProducto(producto);
+                    guardarDatosEnArchivo(this);
                 } else {
                     System.out.println("No hay suficientes productos !!!");
                 }
             } else {
                 System.out.println("Lo siento, el producto que buscas no existe !!!");
             }
-    //da opcion para elegir si se desea extraer otro producto
             System.out.print("¿Desea extraer otro producto? (S/N): ");
             confirmacion = scanner.next();
         } while (confirmacion.equalsIgnoreCase("S"));
     }
+
+
     public void eliminarProducto(String codigo) {
         Producto producto = buscarProducto(codigo);
         if (producto != null) {
             inventario.remove(producto);
             System.out.println("Producto eliminado exitosamente.");
+            guardarDatosEnArchivo(this);
         } else {
             System.out.println("El producto que intentas eliminar no existe.");
         }
@@ -120,6 +132,17 @@ class Farmacia {
         System.out.println("Cantidad: " + producto.cantidadExistente);
         System.out.println("Precio Unitario: " + producto.precioUnitario);
         System.out.println("Total: " + producto.calcularTotal());
+    }
+
+    public void ingresarProducto(String codigo, int cantidad) {
+        Producto producto = buscarProducto(codigo);
+        if (producto != null) {
+            producto.cantidadExistente += cantidad;
+            System.out.println("Existencias actualizadas:");
+            mostrarProducto(producto);
+        } else {
+            System.out.println("Lo siento, el producto que buscas no existe");
+        }
     }
 }
 //clase principal que contiene el metodo main
@@ -204,22 +227,43 @@ public class Main {
                     String nombre = parts[1];
                     int cantidad = Integer.parseInt(parts[2]);
                     double precio = Double.parseDouble(parts[3]);
-                    farmacia.registrarProducto(new Producto(codigo, nombre, cantidad, precio));
+                    Producto producto = new Producto(codigo, nombre, cantidad, precio);
+
+                    if (parts.length >= 5 && parts[4].length() > 0) {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        Date fechaRegistro = dateFormat.parse(parts[4]);
+                        producto.fechaRegistro = fechaRegistro;
+                    }
+
+                    if (parts.length >= 6 && parts[5].length() > 0) {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        Date fechaExtraccion = dateFormat.parse(parts[5]);
+                        producto.fechaExtraccion = fechaExtraccion;
+                    }
+
+                    farmacia.registrarProducto(producto);
                 }
             }
         } catch (FileNotFoundException e) {
             System.out.println("El archivo no existe. Se creará uno nuevo al guardar datos.");
+        } catch (ParseException e) {
+            System.out.println("Error al analizar las fechas desde el archivo.");
         }
-    } //Try Catch para manejar la excepcion en caso de que el archivo no exista
+    }
+    //Try Catch para manejar la excepcion en caso de que el archivo no exista
 
     /*funcion para guardar los datos de los productos en el archivo de texto
     Se utiliza un bucle for para recorrer los productos y escribir los datos de cada producto en una linea individual*/
     private static void guardarDatosEnArchivo(Farmacia farmacia) {
         String filePath = "c:/ficheros/farmacia.txt";
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             for (Producto producto : farmacia.inventario) {
+                String fechaRegistroStr = dateFormat.format(producto.fechaRegistro);
+                String fechaExtraccionStr = producto.fechaExtraccion != null ? dateFormat.format(producto.fechaExtraccion) : "";
                 writer.println(producto.codigoProducto + "," + producto.nombreProducto + "," +
-                        producto.cantidadExistente + "," + producto.precioUnitario);
+                        producto.cantidadExistente + "," + producto.precioUnitario + "," +
+                        fechaRegistroStr + "," + fechaExtraccionStr);
             }
         } catch (IOException e) {
             System.out.println("Error al guardar los datos en el archivo.");
