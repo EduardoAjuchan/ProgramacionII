@@ -6,7 +6,6 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Calendar;
 //Declaracion de variables globales
 class Producto {
     String codigoProducto;
@@ -47,7 +46,7 @@ class Farmacia {
         String filePath = "c:/ficheros/farmacia.txt";
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            dateFormat.setTimeZone(TimeZone.getTimeZone("America/Guatemala"));
+            dateFormat.setTimeZone(TimeZone.getTimeZone("America/Guatemala")); // Zona horaria de Guatemala
             for (Producto producto : inventario) {
                 String fechaRegistroStr = dateFormat.format(producto.fechaRegistro);
                 String fechaExtraccionStr = producto.fechaExtraccion != null ? dateFormat.format(producto.fechaExtraccion) : "";
@@ -76,7 +75,7 @@ class Farmacia {
         }
         double granTotal = 0;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); // Formato de fecha
-        dateFormat.setTimeZone(TimeZone.getTimeZone("America/Guatemala")); // Zona horaria
+        dateFormat.setTimeZone(TimeZone.getTimeZone("America/Guatemala")); // Zona horaria de Guatemala
         for (Producto producto : inventario) {
             double total = producto.calcularTotal();
             granTotal += total;
@@ -240,7 +239,7 @@ public class Main {
                     double precio = Double.parseDouble(parts[3]);
                     Producto producto = new Producto(codigo, nombre, cantidad, precio);
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                    dateFormat.setTimeZone(TimeZone.getTimeZone("America/Guatemala"));
+                    dateFormat.setTimeZone(TimeZone.getTimeZone("America/Guatemala")); // Zona horaria de Guatemala
                     if (parts.length >= 5 && parts[4].length() > 0) {
                         Date fechaRegistro = dateFormat.parse(parts[4]);
                         producto.fechaRegistro = fechaRegistro;
@@ -267,7 +266,7 @@ public class Main {
         String filePath = "c:/ficheros/farmacia.txt";
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); // Formato de fecha
-            dateFormat.setTimeZone(TimeZone.getTimeZone("America/Guatemala")); // Zona horaria
+            dateFormat.setTimeZone(TimeZone.getTimeZone("America/Guatemala")); // Zona horaria de Guatemala
             for (Producto producto : farmacia.inventario) {
                 String fechaRegistroStr = dateFormat.format(producto.fechaRegistro); // Convertir fecha a string
                 String fechaExtraccionStr = producto.fechaExtraccion != null ? dateFormat.format(producto.fechaExtraccion) : ""; // Convertir fecha a string si existe
