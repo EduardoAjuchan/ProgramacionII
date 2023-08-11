@@ -6,6 +6,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Calendar;
 //Declaracion de variables globales
 class Producto {
     String codigoProducto;
@@ -46,6 +47,7 @@ class Farmacia {
         String filePath = "c:/ficheros/farmacia.txt";
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("America/Guatemala"));
             for (Producto producto : inventario) {
                 String fechaRegistroStr = dateFormat.format(producto.fechaRegistro);
                 String fechaExtraccionStr = producto.fechaExtraccion != null ? dateFormat.format(producto.fechaExtraccion) : "";
@@ -69,11 +71,12 @@ class Farmacia {
 //funcion para mostrar los productos del inventario
     public void mostrarProductos() {
         if (inventario.isEmpty()) {
-            System.out.println("Lo siento!!! No hay productos");
+            System.out.println("Lo siento! No hay productos registrados");
             return;
         }
         double granTotal = 0;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); // Formato de fecha
+        dateFormat.setTimeZone(TimeZone.getTimeZone("America/Guatemala")); // Zona horaria
         for (Producto producto : inventario) {
             double total = producto.calcularTotal();
             granTotal += total;
@@ -87,38 +90,38 @@ class Farmacia {
             }
 
             if (producto.fechaExtraccion != null) {
-                System.out.println("Fecha de Extracción: " + dateFormat.format(producto.fechaExtraccion)); // Mostrar fecha de extracción si existe
+                System.out.println("Fecha de Venta: " + dateFormat.format(producto.fechaExtraccion)); // Mostrar fecha de la ultima venta si existe alguna
             }
 
-            System.out.println("Total: " + total);
+            System.out.println("Sub total: " + total); //total de un producto
             System.out.println();
         }
-        System.out.println("Gran Total: " + granTotal);
+        System.out.println("Total: " + granTotal); //gran total de todos los productos
     }
     //funcion para extraer productos del inventario
     public void extraerProductos(Scanner scanner) {
         String confirmacion;
         do {
-            System.out.print("Ingrese el código del producto a extraer: ");
+            System.out.print("Ingrese el código del producto para la venta: ");
             String codigo = scanner.next();
             Producto producto = buscarProducto(codigo);
         //condicion para verificar si el producto existe
             if (producto != null) {
-                System.out.print("Ingrese la cantidad del producto a extraer: ");
+                System.out.print("Ingrese la cantidad del producto a vender: ");
                 int cantidad = scanner.nextInt();
                 if (producto.cantidadExistente >= cantidad) {
-                    System.out.println("Extrayendo " + cantidad + " unidades del producto " + producto.nombreProducto);
+                    System.out.println("Vendiendo " + cantidad + " unidades del producto " + producto.nombreProducto);
                     producto.cantidadExistente -= cantidad;
                     producto.fechaExtraccion = new Date();
                     mostrarProducto(producto);
                     guardarDatosEnArchivo();
                 } else {
-                    System.out.println("No hay suficientes productos !!!");
+                    System.out.println("No hay suficientes productos !");
                 }
             } else {
-                System.out.println("Lo siento, el producto que buscas no existe !!!");
+                System.out.println("Lo siento, el producto que buscas no existe!");
             }
-            System.out.print("¿Desea extraer otro producto? (S/N): ");
+            System.out.print("¿Desea añadir otro producto? (S/N): ");
             confirmacion = scanner.next();
         } while (confirmacion.equalsIgnoreCase("S"));
     }
@@ -166,9 +169,9 @@ public class Main {
             System.out.println("FARMACIAS EL DIFUNTO");
             System.out.println("*********************************************");
             System.out.println("1. Registrar medicamento en el inventario");
-            System.out.println("2. Mostrar mediamentos del inventario");
+            System.out.println("2. Mostrar medicamentos del inventario");
             System.out.println("3. Ingresar existencias al inventario");
-            System.out.println("4. Hacer venta de un producto");
+            System.out.println("4. Realizar Venta");
             System.out.println("5. Eliminar un producto del inventario");
             System.out.println("6. Salir");
             System.out.print("Seleccione una opción: ");
@@ -213,7 +216,7 @@ public class Main {
                     guardarDatosEnArchivo(farmacia); // Guardar datos actualizados en el archivo
                     break;
                 case 6:
-                    System.out.println("Gracias por preferir Farmcias El Difunto");
+                    System.out.println("Gracias por preferir Farmcias EL DIFUNTO");
                     break;
                 default:
                     System.out.println("Seleccionaste una opción inválida");
@@ -236,9 +239,8 @@ public class Main {
                     int cantidad = Integer.parseInt(parts[2]);
                     double precio = Double.parseDouble(parts[3]);
                     Producto producto = new Producto(codigo, nombre, cantidad, precio);
-
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
+                    dateFormat.setTimeZone(TimeZone.getTimeZone("America/Guatemala"));
                     if (parts.length >= 5 && parts[4].length() > 0) {
                         Date fechaRegistro = dateFormat.parse(parts[4]);
                         producto.fechaRegistro = fechaRegistro;
@@ -265,6 +267,7 @@ public class Main {
         String filePath = "c:/ficheros/farmacia.txt";
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); // Formato de fecha
+            dateFormat.setTimeZone(TimeZone.getTimeZone("America/Guatemala")); // Zona horaria
             for (Producto producto : farmacia.inventario) {
                 String fechaRegistroStr = dateFormat.format(producto.fechaRegistro); // Convertir fecha a string
                 String fechaExtraccionStr = producto.fechaExtraccion != null ? dateFormat.format(producto.fechaExtraccion) : ""; // Convertir fecha a string si existe
