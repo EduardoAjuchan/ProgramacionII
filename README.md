@@ -33,7 +33,7 @@ El ejercicio de timer consiste en un contador que cuenta segundos, minutos y hor
 
 El laboratorio del primer módulo consiste en un CRUD utilizando ficheros `.txt` para la manipulación de datos. Esto demuestra la habilidad de manipular ficheros y realizar operaciones básicas de creación, lectura, actualización y eliminación.
 
-## Instrucciones de Instalación
+## Instrucciones de clonación de repositorio
 
 Para clonar este repositorio en tu computadora, sigue estos pasos:
 
