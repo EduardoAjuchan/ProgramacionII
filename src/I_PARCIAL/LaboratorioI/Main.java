@@ -39,13 +39,28 @@ class Farmacia {
             return;
         } else {
             inventario.add(producto);
-            guardarDatosEnArchivo(this); // Agrega esta línea para guardar los datos al agregar un nuevo producto
+            guardarDatosEnArchivo(); // Corrección aquí
         }
     }
 
 
-    private void guardarDatosEnArchivo(Farmacia farmacia) {
+    private void guardarDatosEnArchivo() {
+        String filePath = "c:/ficheros/farmacia.txt";
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            for (Producto producto : inventario) {
+                String fechaRegistroStr = dateFormat.format(producto.fechaRegistro);
+                String fechaExtraccionStr = producto.fechaExtraccion != null ? dateFormat.format(producto.fechaExtraccion) : "";
+                writer.println(producto.codigoProducto + "," + producto.nombreProducto + "," +
+                        producto.cantidadExistente + "," + producto.precioUnitario + "," +
+                        fechaRegistroStr + "," + fechaExtraccionStr);
+            }
+        } catch (IOException e) {
+            System.out.println("Error al guardar los datos en el archivo.");
+        }
     }
+
+
 
     private Producto buscarProducto(String codigoProducto) {
         for (Producto producto : inventario) {
@@ -101,7 +116,7 @@ class Farmacia {
                     producto.cantidadExistente -= cantidad;
                     producto.fechaExtraccion = new Date();
                     mostrarProducto(producto);
-                    guardarDatosEnArchivo(this);
+                    guardarDatosEnArchivo();
                 } else {
                     System.out.println("No hay suficientes productos !!!");
                 }
@@ -119,7 +134,7 @@ class Farmacia {
         if (producto != null) {
             inventario.remove(producto);
             System.out.println("Producto eliminado exitosamente.");
-            guardarDatosEnArchivo(this);
+            guardarDatosEnArchivo();
         } else {
             System.out.println("El producto que intentas eliminar no existe.");
         }
@@ -149,7 +164,7 @@ class Farmacia {
 public class Main {
     public static void main(String[] args) {
         Farmacia farmacia = new Farmacia();
-        cargarDatosDesdeArchivo(farmacia); // Cargar datos existentes desde el archivo
+        cargarDatosDesdeArchivo(farmacia);// Cargar datos existentes desde el archivo
         Scanner scanner = new Scanner(System.in);
         int opcion;
 
@@ -222,21 +237,21 @@ public class Main {
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 String[] parts = line.split(",");
-                if (parts.length == 4) {
+                if (parts.length >= 4) {
                     String codigo = parts[0];
                     String nombre = parts[1];
                     int cantidad = Integer.parseInt(parts[2]);
                     double precio = Double.parseDouble(parts[3]);
                     Producto producto = new Producto(codigo, nombre, cantidad, precio);
 
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
                     if (parts.length >= 5 && parts[4].length() > 0) {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         Date fechaRegistro = dateFormat.parse(parts[4]);
                         producto.fechaRegistro = fechaRegistro;
                     }
 
                     if (parts.length >= 6 && parts[5].length() > 0) {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         Date fechaExtraccion = dateFormat.parse(parts[5]);
                         producto.fechaExtraccion = fechaExtraccion;
                     }
