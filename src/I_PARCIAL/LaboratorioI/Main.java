@@ -38,7 +38,7 @@ class Farmacia {
             return;
         } else {
             inventario.add(producto);
-            guardarDatosEnArchivo(); // Corrección aquí
+            guardarDatosEnArchivo(); 
         }
     }
 //funcion para guardar los datos de los productos en el archivo de texto
