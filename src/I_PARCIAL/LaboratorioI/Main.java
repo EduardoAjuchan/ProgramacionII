@@ -99,12 +99,13 @@ class Farmacia {
     }
     //funcion para extraer productos del inventario
     public void extraerProductos(Scanner scanner) {
+        double totalVentas = 0; // Variable para mantener el total de ventas
         String confirmacion;
         do {
             System.out.print("Ingrese el código del producto para la venta: ");
             String codigo = scanner.next();
             Producto producto = buscarProducto(codigo);
-        //condicion para verificar si el producto existe
+
             if (producto != null) {
                 System.out.print("Ingrese la cantidad del producto a vender: ");
                 int cantidad = scanner.nextInt();
@@ -114,6 +115,9 @@ class Farmacia {
                     producto.fechaExtraccion = new Date();
                     mostrarProducto(producto);
                     guardarDatosEnArchivo();
+
+                    double totalVentaProducto = producto.precioUnitario * cantidad; // Calcula el total de la venta de este producto
+                    totalVentas += totalVentaProducto; // Agrega al total general de ventas
                 } else {
                     System.out.println("No hay suficientes productos !");
                 }
@@ -123,6 +127,8 @@ class Farmacia {
             System.out.print("¿Desea añadir otro producto? (S/N): ");
             confirmacion = scanner.next();
         } while (confirmacion.equalsIgnoreCase("S"));
+
+        System.out.println("TOTAL VENDIDO: " + totalVentas); // Muestra el total de ventas al final
     }
 //funcion para eliminar un producto del inventario
     public void eliminarProducto(String codigo) {
