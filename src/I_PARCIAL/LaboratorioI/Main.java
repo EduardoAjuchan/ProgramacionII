@@ -1,5 +1,5 @@
 package I_PARCIAL.LaboratorioI;
-/*Autor: EDUARDO AJUCHAN
+/*Autor: EDUARDO AJUCHAN MAZATE
 Proyecto: LABORATORIO 1
 PROGRAMACION II*/
 import java.io.*;
