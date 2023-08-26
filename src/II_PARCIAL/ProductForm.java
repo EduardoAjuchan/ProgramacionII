@@ -1,5 +1,5 @@
 package II_PARCIAL;
-
+//se importan las librerias necesarias
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,13 +12,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-
+//se crea la clase ProductForm
 public class ProductForm extends JFrame {
     private JTextField nombreField, precioField, cantidadField;
     private JDateChooser fechaChooser;
     private DefaultTableModel tableModel;
     private JTable productTable;
-
+//se crea el constructor
     public ProductForm() {
         setTitle("FARMACIAS EL DIFUNTO");
         setSize(800, 600);
@@ -46,7 +46,7 @@ public class ProductForm extends JFrame {
                 cargarProductos();
             }
         });
-
+    //se crean los botones para modificar, eliminar y limpiar
         JButton modificarButton = new JButton("Modificar");
         modificarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -60,14 +60,14 @@ public class ProductForm extends JFrame {
                 eliminarProducto();
             }
         });
-
+    //se crea el boton limpiar
         JButton limpiarButton = new JButton("Limpiar");
         limpiarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 limpiarCampos();
             }
         });
-
+    //se agregan los botones y los campos de texto
         inputPanel.add(nameLabel);
         inputPanel.add(nombreField);
         inputPanel.add(precioLabel);
@@ -82,13 +82,13 @@ public class ProductForm extends JFrame {
         inputPanel.add(limpiarButton);
 
         add(inputPanel, BorderLayout.NORTH);
-
+        //se crea la tabla
         String[] columnNames = {"Código", "Nombre", "Precio", "Cantidad", "Fecha de Vencimiento"};
         tableModel = new DefaultTableModel(columnNames, 0);
         productTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(productTable);
         add(scrollPane, BorderLayout.CENTER);
-
+        //se crea el boton salir
         JButton salirButton = new JButton("Salir");
         salirButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -96,7 +96,7 @@ public class ProductForm extends JFrame {
                 System.exit(0);
             }
         });
-
+        //se crea el boton limpiar
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(new JLabel()); // Espacio en blanco para el diseño
         buttonPanel.add(limpiarButton);
@@ -109,19 +109,19 @@ public class ProductForm extends JFrame {
         setVisible(true);
     }
 
-
+    //se crea el metodo limpiar campos
     private void limpiarCampos() {
         nombreField.setText("");
         precioField.setText("");
         cantidadField.setText("");
         fechaChooser.setDate(null);
     }
-
+//se crea el metodo guardar en base de datos
     private void guardarEnBaseDeDatos() {
         String url = "jdbc:mysql://localhost/BDNegocio";
         String user = "root";
         String password = "123456";
-
+//se crea el try catch para la conexion con la base de datos
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             System.out.println("Conexión establecida");
             String query = "INSERT INTO producto (nombreProducto, precioUnitario, cantidadProducto, fechaVencimiento) VALUES (?, ?, ?, ?)";
@@ -138,14 +138,14 @@ public class ProductForm extends JFrame {
             JOptionPane.showMessageDialog(this, "Error al guardar el medicamento");
         }
     }
-
+    //se crea el metodo cargar productos
     private void cargarProductos() {
         String url = "jdbc:mysql://localhost/BDNegocio";
         String user = "root";
         String password = "123456";
 
         tableModel.setRowCount(0);
-
+//se hace el query para cargar los productos
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "SELECT codigoProducto, nombreProducto, precioUnitario, cantidadProducto, fechaVencimiento FROM producto";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -165,9 +165,8 @@ public class ProductForm extends JFrame {
             JOptionPane.showMessageDialog(this, "Error al cargar los productos");
         }
     }
-
+//se crea el metodo modificar producto
     private void modificarProducto() {
-        // Lógica para modificar un producto
         // Obtener el índice de la fila seleccionada en la tabla
         int selectedRow = productTable.getSelectedRow();
         if (selectedRow == -1) {
@@ -207,7 +206,7 @@ public class ProductForm extends JFrame {
             String url = "jdbc:mysql://localhost/BDNegocio";
             String user = "root";
             String password = "123456";
-
+        //se hace un query para actualizar los datos
             try (Connection connection = DriverManager.getConnection(url, user, password)) {
                 String query = "UPDATE producto SET nombreProducto=?, precioUnitario=?, cantidadProducto=?, fechaVencimiento=? WHERE codigoProducto=?";
                 PreparedStatement statement = connection.prepareStatement(query);
@@ -225,9 +224,8 @@ public class ProductForm extends JFrame {
             }
         }
     }
-
+    //se crea el metodo eliminar producto
     private void eliminarProducto() {
-        // Lógica para eliminar un producto
         int selectedRow = productTable.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Selecciona un producto para eliminar");
@@ -236,13 +234,13 @@ public class ProductForm extends JFrame {
 
         String codigo = productTable.getValueAt(selectedRow, 0).toString();
         String nombre = productTable.getValueAt(selectedRow, 1).toString();
-
+        //se crea un mensaje de confirmacion para eliminar el producto
         int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de eliminar el producto '" + nombre + "'?");
         if (confirmacion == JOptionPane.YES_OPTION) {
             String url = "jdbc:mysql://localhost/BDNegocio";
             String user = "root";
             String password = "123456";
-
+            //se hace un query para eliminar el producto
             try (Connection connection = DriverManager.getConnection(url, user, password)) {
                 String query = "DELETE FROM producto WHERE codigoProducto=?";
                 PreparedStatement statement = connection.prepareStatement(query);
